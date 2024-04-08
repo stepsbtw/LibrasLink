@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LibrasLink</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        nav {
+            background-color: #f4f4f4;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #ccc;
+            color: #fff;
+        }
+        section {
+            padding: 20px;
+            text-align: center;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 8px;
+            position: relative;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #555;
+        }
+        button[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>LibrasLink</h1>
+        <button onclick="openModal()">Cadastre-se</button>
+        <button onclick="openLoginModal()">Entrar</button>
+    </header>
+    <nav id="myNav" class="nav">
+        <a href="#" onclick="toggleNav()">Menu &#9776;</a>
+        <div id="navLinks" class="nav-links">
+            <a href="#">Sobre</a>
+            <a href="#">Serviços</a>
+            <a href="#">Contato</a>
+        </div>
+    </nav>
+    <section>
+        <h2>Bem-vindo ao LibrasLink</h2>
+        <p>Conectando empresas e intérpretes de Libras para promover inclusão e acessibilidade.</p>
+    </section>
+    <footer>
+        <p>&copy; 2024 LibrasLink</p>
+    </footer>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Cadastro</h2>
+            <form id="registerForm">
+                <label for="name">Nome:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="email">E-mail:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="password">Senha:</label><br>
+                <input type="password" id="password" name="password" required><br><br>
+                <label for="userType">Tipo de Usuário:</label><br>
+                <select id="userType" name="userType">
+                    <option value="interpreter">Intérprete</option>
+                    <option value="company">Empresa</option>
+                </select><br><br>
+                <div id="companyFields" style="display:none;">
+                    <label for="companyName">Nome da Empresa:</label><br>
+                    <input type="text" id="companyName" name="companyName"><br><br>
+                    <label for="companyType">Tipo de Empresa:</label><br>
+                    <input type="text" id="companyType" name="companyType"><br><br>
+                </div>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="loginEmail">E-mail:</label><br>
+                <input type="email" id="loginEmail" name="loginEmail" required><br><br>
+                <label for="loginPassword">Senha:</label><br>
+                <input type="password" id="loginPassword" name="loginPassword" required><br><br>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        function openLoginModal() {
+            document.getElementById("loginModal").style.display = "block";
+        }
+
+        function closeLoginModal() {
+            document.getElementById("loginModal").style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById("myModal");
+            var loginModal = document.getElementById("loginModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            if (event.target == loginModal) {
+                loginModal.style.display = "none";
+            }
+        }
+
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Coletar os dados do formulário
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var userType = document.getElementById("userType").value;
+            var companyName = document.getElementById("companyName").value;
+            var companyType = document.getElementById("companyType").value;
+
+            // Criar um objeto com os dados do formulário
+            var userData = {
+                name: name,
+                email: email,
+                password: password,
+                userType: userType,
+                companyName: companyName,
+                companyType: companyType
+            };
+
+            // Armazenar os dados no armazenamento local do navegador
+            localStorage.setItem("userData", JSON.stringify(userData));
+
+            // Fechar o modal
+            closeModal();
+        });
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Coletar credenciais de login
+            var email = document.getElementById("loginEmail").value;
+            var password = document.getElementById("loginPassword").value;
+
+            // Verificar as credenciais (exemplo simples, substitua por validação real)
+            if (email === "usuario@example.com" && password === "senha123") {
+                alert("Login bem-sucedido!");
+                closeLoginModal();
+            } else {
+                alert("Credenciais inválidas. Tente novamente.");
+            }
+        });
+    </script>
+</body>
+</html>
